@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanpa Kartu</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        .card-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .card-icon {
+            font-size: 50px;
+            color: #2563eb;
+        }
+        .logo {
+            height: 50px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white text-center py-4 flex justify-center items-center">
+        <img src="logo.jpg" alt="Logo" class="logo">
+        <h1 class="text-2xl font-bold">Tanpa Kartu</h1>
+    </header>
+
+    <nav class="bg-gray-800 text-white py-2">
+        <ul class="flex justify-center space-x-4">
+            <li><a href="dashboard.html" class="text-white hover:text-blue-400">Home</a></li>
+            <li><a href="services.html" class="text-white hover:text-blue-400">Layanan</a></li>
+            <li><a href="contact.html" class="text-white hover:text-blue-400">Kontak</a></li>
+            <li><a href="transactions.html" class="text-white hover:text-blue-400">Transaksi</a></li>
+            <li><a href="qris.html" class="text-white hover:text-blue-400">QRIS</a></li>
+            <li><a href="notifications.html" class="text-white hover:text-blue-400">Notifikasi</a></li>
+            <li><a href="profil.html" class="text-white hover:text-blue-400">Akun Saya</a></li>
+            <li><a href="index.html" class="text-white hover:text-blue-400">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="container mt-5 p-5 bg-white rounded-lg shadow">
+        <h2 class="text-xl font-bold text-center text-gray-800">Form Transaksi</h2>
+        <form id="transaksiForm" class="mt-4">
+            <div class="mb-3">
+                <label for="nominal" class="form-label font-bold">Nominal Pembayaran</label>
+                <input type="number" id="nominal" class="form-control" placeholder="Masukkan jumlah" required>
+            </div>
+            <div class="mb-3">
+                <label for="metode" class="form-label font-bold">Metode Pembayaran</label>
+                <select id="metode" class="form-control" required>
+                    <option value="">Pilih Metode</option>
+                    <option value="qris">QRIS</option>
+                    <option value="nfc">NFC</option>
+                </select>
+            </div>
+            <button type="button" onclick="konfirmasiPembayaran()" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 transition">Bayar Sekarang</button>
+        </form>
+    </section>
+
+    <section class="container mt-5 p-5 bg-white rounded-lg shadow">
+        <h2 class="text-xl font-bold text-center text-gray-800">Riwayat Transaksi</h2>
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Metode</th>
+                    <th>Nominal</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="riwayatTransaksi"></tbody>
+        </table>
+    </section>
+
+    <footer class="text-center bg-gray-900 text-white py-4 mt-5">
+        <p>&copy; This application was created by Athalla Rakha Syafa'at.</p>
+    </footer>
+    
+    <script>
+        function konfirmasiPembayaran() {
+            let nominal = document.getElementById("nominal").value;
+            let metode = document.getElementById("metode").value;
+
+            if (!nominal || !metode) {
+                alert("Harap isi semua bidang yang diperlukan!");
+                return;
+            }
+
+            let transaksi = { metode, nominal };
+            simpanTransaksi(transaksi);
+            tampilkanRiwayat();
+        }
+
+        function simpanTransaksi(transaksi) {
+            let transaksiList = JSON.parse(localStorage.getItem("transaksiList")) || [];
+            transaksiList.push(transaksi);
+            localStorage.setItem("transaksiList", JSON.stringify(transaksiList));
+        }
+
+        function tampilkanRiwayat() {
+            let transaksiList = JSON.parse(localStorage.getItem("transaksiList")) || [];
+            let tbody = document.getElementById("riwayatTransaksi");
+            tbody.innerHTML = "";
+
+            transaksiList.forEach((transaksi, index) => {
+                let row = `<tr>
+                    <td>${index + 1}</td>
+                    <td>${transaksi.metode.toUpperCase()}</td>
+                    <td>Rp ${transaksi.nominal}</td>
+                    <td><button onclick="hapusTransaksi(${index})" class="btn btn-danger btn-sm">Hapus</button></td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function hapusTransaksi(index) {
+            let transaksiList = JSON.parse(localStorage.getItem("transaksiList")) || [];
+            transaksiList.splice(index, 1);
+            localStorage.setItem("transaksiList", JSON.stringify(transaksiList));
+            tampilkanRiwayat();
+        }
+
+        document.addEventListener("DOMContentLoaded", tampilkanRiwayat);
+    </script>    
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Uang</title>
+    <link rel="shortcut icon" href="logo.jpg" type="image/jpg">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white text-center py-4">
+        <div class="flex items-center justify-center">
+            <img src="logo.jpg" alt="Logo" class="h-12 w-12 mr-2">
+            <h1 class="text-2xl font-bold">Transfer Uang</h1>
+        </div>
+        <nav>
+            <ul class="flex justify-center space-x-4 mt-2">
+                <li><a href="dashboard.html" class="text-white hover:text-blue-400">Home</a></li>
+                <li><a href="services.html" class="text-white hover:text-blue-400">Layanan</a></li>
+                <li><a href="contact.html" class="text-white hover:text-blue-400">Kontak</a></li>
+                <li><a href="transactions.html" class="text-white hover:text-blue-400">Transaksi</a></li>
+                <li><a href="qris.html" class="text-white hover:text-blue-400">QRIS</a></li>
+                <li><a href="notifications.html" class="text-white hover:text-blue-400">Notifikasi</a></li>
+                <li><a href="profil.html" class="text-white hover:text-blue-400">Akun Saya</a></li>
+                <li><a href="index.html" class="text-white hover:text-blue-400">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="container mt-5 p-5 bg-white rounded-lg shadow">
+        <h2 class="text-xl font-bold text-center text-gray-800">Formulir Transfer</h2>
+        <form id="transferForm" class="mt-4">
+            <div class="mb-3">
+                <label for="namaPenerima" class="form-label font-bold">Nama Penerima</label>
+                <input type="text" id="namaPenerima" class="form-control" placeholder="Masukkan nama penerima" required>
+            </div>
+            <div class="mb-3">
+                <label for="nomorRekening" class="form-label font-bold">Nomor Rekening</label>
+                <input type="text" id="nomorRekening" class="form-control" placeholder="Masukkan nomor rekening" required>
+            </div>
+            <div class="mb-3">
+                <label for="jumlah" class="form-label font-bold">Jumlah Transfer (Rp)</label>
+                <input type="number" id="jumlah" class="form-control" placeholder="Masukkan jumlah" required>
+            </div>
+            <div class="mb-3">
+                <label for="pesan" class="form-label font-bold">Pesan (Opsional)</label>
+                <input type="text" id="pesan" class="form-control" placeholder="Tambahkan pesan">
+            </div>
+            <button type="button" onclick="konfirmasiTransfer()" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 transition">Transfer Sekarang</button>
+        </form>
+    </section>
+
+    <section class="container mt-5 p-5 bg-white rounded-lg shadow">
+        <h2 class="text-xl font-bold text-center text-gray-800">Riwayat Transfer</h2>
+        <ul id="riwayatTransfer" class="list-group mt-3"></ul>
+    </section>
+
+    <footer class="text-center bg-gray-900 text-white py-4 mt-5">
+        <p>&copy; This application was created by Athalla Rakha Syafa'at.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            tampilkanRiwayat();
+        });
+
+        function konfirmasiTransfer() {
+            let namaPenerima = document.getElementById("namaPenerima").value;
+            let nomorRekening = document.getElementById("nomorRekening").value;
+            let jumlah = document.getElementById("jumlah").value;
+            let pesan = document.getElementById("pesan").value || "-";
+
+            if (!namaPenerima || !nomorRekening || !jumlah) {
+                alert("Harap isi semua bidang yang diperlukan!");
+                return;
+            }
+
+            let transaksi = {
+                namaPenerima,
+                nomorRekening,
+                jumlah,
+                pesan,
+                tanggal: new Date().toLocaleString()
+            };
+
+            let riwayat = JSON.parse(localStorage.getItem("riwayatTransfer")) || [];
+            riwayat.push(transaksi);
+            localStorage.setItem("riwayatTransfer", JSON.stringify(riwayat));
+
+            tampilkanRiwayat();
+            alert("Transfer berhasil!");
+            document.getElementById("transferForm").reset();
+        }
+
+        function tampilkanRiwayat() {
+            let riwayat = JSON.parse(localStorage.getItem("riwayatTransfer")) || [];
+            let daftar = document.getElementById("riwayatTransfer");
+            daftar.innerHTML = "";
+
+            riwayat.forEach((item, index) => {
+                let listItem = document.createElement("li");
+                listItem.className = "list-group-item d-flex justify-content-between align-items-center";
+                listItem.innerHTML = `
+                    <div>
+                        <strong>${item.namaPenerima}</strong> (Rek: ${item.nomorRekening})<br>
+                        Rp${item.jumlah} - ${item.pesan}<br>
+                        <small>${item.tanggal}</small>
+                    </div>
+                    <button class="btn btn-danger btn-sm" onclick="hapusRiwayat(${index})">Hapus</button>
+                `;
+                daftar.appendChild(listItem);
+            });
+        }
+
+        function hapusRiwayat(index) {
+            let riwayat = JSON.parse(localStorage.getItem("riwayatTransfer")) || [];
+            riwayat.splice(index, 1);
+            localStorage.setItem("riwayatTransfer", JSON.stringify(riwayat));
+            tampilkanRiwayat();
+        }
+    </script>
+</body>
+</html>

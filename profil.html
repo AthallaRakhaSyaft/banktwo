@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akun Saya</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .profile-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .profile-icon {
+            font-size: 80px;
+            color: #2563eb;
+        }
+        .logo {
+            height: 50px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white text-center py-4 flex justify-center items-center">
+        <img src="logo.jpg" alt="Logo" class="logo">
+        <h1 class="text-2xl font-bold">Akun Saya</h1>
+    </header>
+
+    <nav class="bg-gray-800 text-white py-2">
+        <ul class="flex justify-center space-x-4">
+            <li><a href="dashboard.html" class="text-white hover:text-blue-400">Home</a></li>
+            <li><a href="services.html" class="text-white hover:text-blue-400">Layanan</a></li>
+            <li><a href="contact.html" class="text-white hover:text-blue-400">Kontak</a></li>
+            <li><a href="transactions.html" class="text-white hover:text-blue-400">Transaksi</a></li>
+            <li><a href="qris.html" class="text-white hover:text-blue-400">QRIS</a></li>
+            <li><a href="notifications.html" class="text-white hover:text-blue-400">Notifikasi</a></li>
+            <li><a href="profil.html" class="text-white hover:text-blue-400">Akun Saya</a></li>
+            <li><a href="index.html" class="text-white hover:text-blue-400">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="container mt-5 p-5 bg-white rounded-lg shadow text-center profile-card">
+        <i class="fas fa-user-circle profile-icon"></i>
+        <h2 id="profile-name" class="text-2xl font-bold text-gray-800 mt-2"></h2>
+        <p id="profile-email" class="text-gray-600"></p>
+        <p id="profile-phone" class="text-gray-600"></p>
+
+        <button class="btn btn-primary mt-4" onclick="toggleEditForm()">
+            <i class="fas fa-edit"></i> Edit Profil
+        </button>
+
+        <div id="edit-form" class="hidden mt-4">
+            <form onsubmit="saveProfile(event)">
+                <div class="mb-3">
+                    <label class="form-label">Nama Lengkap</label>
+                    <input type="text" class="form-control" id="name">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nomor HP</label>
+                    <input type="text" class="form-control" id="phone">
+                </div>
+                <button type="submit" class="btn btn-success">Simpan</button>
+                <button type="button" class="btn btn-danger" onclick="toggleEditForm()">Batal</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="text-center bg-gray-900 text-white py-4 mt-5">
+        <p>&copy; This application was created by Athalla Rakha Syafa'at.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function toggleEditForm() {
+            var form = document.getElementById("edit-form");
+            form.classList.toggle("hidden");
+        }
+
+        // Fungsi untuk menampilkan data profil dari localStorage saat halaman dimuat
+        function loadProfile() {
+            const name = localStorage.getItem("profile_name") || "Athalla Rakha Syafa'at";
+            const email = localStorage.getItem("profile_email") || "athalla@example.com";
+            const phone = localStorage.getItem("profile_phone") || "+62 812-3456-7890";
+
+            document.getElementById("profile-name").innerText = name;
+            document.getElementById("profile-email").innerText = email;
+            document.getElementById("profile-phone").innerText = phone;
+
+            document.getElementById("name").value = name;
+            document.getElementById("email").value = email;
+            document.getElementById("phone").value = phone;
+        }
+
+        // Fungsi untuk menyimpan perubahan profil ke localStorage
+        function saveProfile(event) {
+            event.preventDefault(); // Mencegah reload halaman
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+
+            if (name === "" || email === "" || phone === "") {
+                alert("Semua kolom harus diisi!");
+                return;
+            }
+
+            localStorage.setItem("profile_name", name);
+            localStorage.setItem("profile_email", email);
+            localStorage.setItem("profile_phone", phone);
+
+            alert("Profil berhasil diperbarui!");
+
+            toggleEditForm();
+            loadProfile(); // Tampilkan data terbaru
+        }
+
+        // Load data profil saat halaman pertama kali dimuat
+        document.addEventListener("DOMContentLoaded", loadProfile);
+    </script>
+</body>
+</html>

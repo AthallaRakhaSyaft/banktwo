@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan Sistem</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        .transition-theme {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .logo {
+            width: 100px;
+            height: auto;
+        }
+        .logo-persegi {
+        width: 100px; /* Lebar logo */
+        height: 100px; /* Tinggi logo */
+        border-radius: 8px; /* Sudut melengkung untuk tampilan yang lebih halus */
+        object-fit: cover; /* Memastikan gambar menyesuaikan kotak tanpa distorsi */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Efek bayangan untuk tampilan yang lebih menarik */
+        }
+        .logo-kecil {
+        width: 80px; /* Sesuaikan ukuran */
+        height: auto; /* Menjaga proporsi */
+        display: block;
+        margin: 0 auto; /* Memastikan logo tetap di tengah */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen transition-theme">
+    <div class="container bg-white p-6 rounded-lg shadow-lg w-full max-w-md transition-theme">
+        <!-- Logo -->
+        <div class="flex justify-center items-center mb-4">
+        <img src="logo.jpg" alt="Logo" class="logo-kecil">
+        </div>
+
+        <h2 class="text-2xl font-bold text-white text-center mb-4">
+            <i class="fas fa-cogs"></i> Pengaturan Sistem
+        </h2>        
+
+        <form id="formPengaturan">
+            <!-- Pilihan Tema Warna -->
+            <div class="mb-4">
+                <label class="form-label font-bold"><i class="fas fa-palette"></i> Tema Warna</label>
+                <select id="temaWarna" class="form-control">
+                    <option value="light">🌞 Terang</option>
+                    <option value="dark">🌙 Gelap</option>
+                </select>
+            </div>
+
+            <!-- Pilihan Ukuran Font -->
+            <div class="mb-4">
+                <label class="form-label font-bold"><i class="fas fa-text-height"></i> Ukuran Font</label>
+                <select id="ukuranFont" class="form-control">
+                    <option value="small">🔹 Kecil</option>
+                    <option value="medium">🔸 Sedang</option>
+                    <option value="large">🔺 Besar</option>
+                </select>
+            </div>
+
+            <!-- Tombol Simpan -->
+            <button type="button" class="btn btn-primary w-full flex items-center justify-center gap-2" onclick="simpanPengaturan()">
+                <i class="fas fa-save"></i> Simpan
+            </button>
+        </form>
+    </div>
+
+    <footer class="text-center bg-gray-900 text-white py-4 mt-5">
+        <p>&copy; This application was created by Athalla Rakha Syafa'at.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function simpanPengaturan() {
+            let tema = document.getElementById("temaWarna").value;
+            let font = document.getElementById("ukuranFont").value;
+
+            // Simpan ke localStorage
+            localStorage.setItem("temaWarna", tema);
+            localStorage.setItem("ukuranFont", font);
+
+            // Terapkan pengaturan tanpa perlu refresh
+            terapkanPengaturan();
+
+            alert("✅ Pengaturan berhasil disimpan!");
+        }
+
+        function terapkanPengaturan() {
+            let tema = localStorage.getItem("temaWarna") || "light";
+            let font = localStorage.getItem("ukuranFont") || "medium";
+
+            // Terapkan tema warna
+            let body = document.body;
+            let container = document.querySelector(".container");
+
+            if (tema === "dark") {
+                body.classList.add("bg-gray-900", "text-white");
+                body.classList.remove("bg-gray-100");
+                container.classList.add("bg-gray-800", "text-white");
+                container.classList.remove("bg-white");
+            } else {
+                body.classList.add("bg-gray-100");
+                body.classList.remove("bg-gray-900", "text-white");
+                container.classList.add("bg-white");
+                container.classList.remove("bg-gray-800", "text-white");
+            }
+
+            // Terapkan ukuran font secara global
+            document.documentElement.style.fontSize = font === "small" ? "14px" : font === "medium" ? "16px" : "18px";
+
+            // Set nilai dropdown agar sesuai dengan pengaturan yang diterapkan
+            document.getElementById("temaWarna").value = tema;
+            document.getElementById("ukuranFont").value = font;
+        }
+
+        // Terapkan pengaturan saat halaman dimuat
+        document.addEventListener("DOMContentLoaded", terapkanPengaturan);
+    </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        .admin-card {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            color: white;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .admin-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+        .logo {
+            height: 50px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white text-center py-4 flex justify-center items-center">
+        <img src="logo.jpg" alt="Logo" class="logo">
+        <h1 class="text-2xl font-bold">Admin</h1>
+    </header>
+
+    <nav class="bg-gray-800 text-white py-2">
+        <ul class="flex justify-center space-x-4">
+            <li><a href="dashboard.html" class="text-white hover:text-blue-400">Home</a></li>
+            <li><a href="services.html" class="text-white hover:text-blue-400">Layanan</a></li>
+            <li><a href="contact.html" class="text-white hover:text-blue-400">Kontak</a></li>
+            <li><a href="transactions.html" class="text-white hover:text-blue-400">Transaksi</a></li>
+            <li><a href="qris.html" class="text-white hover:text-blue-400">QRIS</a></li>
+            <li><a href="notifications.html" class="text-white hover:text-blue-400">Notifikasi</a></li>
+            <li><a href="profil.html" class="text-white hover:text-blue-400">Akun Saya</a></li>
+            <li><a href="index.html" class="text-white hover:text-blue-400">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="container mt-5 p-5 bg-white rounded-lg shadow text-center">
+        <h2 class="text-2xl font-bold text-gray-800">Manajemen Bank Digital</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+            <div class="admin-card" onclick="manageUsers()">
+                <i class="fas fa-users admin-icon"></i>
+                <p class="text-lg font-bold">Kelola Pengguna</p>
+            </div>
+            <div class="admin-card" onclick="manageTransactions()">
+                <i class="fas fa-money-bill-wave admin-icon"></i>
+                <p class="text-lg font-bold">Kelola Transaksi</p>
+            </div>
+            <div class="admin-card" onclick="systemSettings()">
+                <i class="fas fa-cogs admin-icon"></i>
+                <p class="text-lg font-bold">Pengaturan Sistem</p>
+            </div>
+            <div class="admin-card" onclick="viewReports()">
+                <i class="fas fa-chart-bar admin-icon"></i>
+                <p class="text-lg font-bold">Laporan Keuangan</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="adminContent" class="container mt-5 p-5 bg-white rounded-lg shadow">
+        <h2 class="text-xl font-bold text-gray-800 text-center">Silakan pilih menu</h2>
+    </section>
+
+    <footer class="text-center bg-gray-900 text-white py-4 mt-5">
+        <p>&copy; This application was created by Athalla Rakha Syafa'at.</p>
+    </footer>
+
+    <script>
+        function manageUsers() {
+    document.getElementById('adminContent').innerHTML = `
+        <h2 class="text-xl font-bold text-gray-800 text-center">Kelola Pengguna</h2>
+        <div class="mt-4">
+            <p>Di sini Anda dapat mengelola pengguna sistem.</p>
+            <ul class="list-disc list-inside">
+                <li>Tambah Pengguna</li>
+                <li>Edit Pengguna</li>
+                <li>Hapus Pengguna</li>
+                <li>Lihat Daftar Pengguna</li>
+            </ul>
+        </div>
+    `;
+}
+
+function manageTransactions() {
+    document.getElementById('adminContent').innerHTML = `
+        <h2 class="text-xl font-bold text-gray-800 text-center">Kelola Transaksi</h2>
+        <div class="mt-4">
+            <p>Di sini Anda dapat mengelola transaksi.</p>
+            <ul class="list-disc list-inside">
+                <li>Lihat Riwayat Transaksi</li>
+                <li>Verifikasi Transaksi</li>
+                <li>Batalkan Transaksi</li>
+            </ul>
+        </div>
+    `;
+}
+
+function systemSettings() {
+    // Redirect ke halaman pengaturansistem.html
+    window.location.href = "pengaturansistem.html";
+}
+
+function viewReports() {
+    document.getElementById('adminContent').innerHTML = `
+        <h2 class="text-xl font-bold text-gray-800 text-center">Laporan Keuangan</h2>
+        <div class="mt-4">
+            <p>Di sini Anda dapat melihat laporan keuangan.</p>
+            <ul class="list-disc list-inside">
+                <li>Laporan Bulanan</li>
+                <li>Laporan Tahunan</li>
+                <li>Analisis Keuangan</li>
+            </ul>
+        </div>
+    `;
+}
+    </script>
+</body>
+</html>

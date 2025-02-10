@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berbagi</title>
+    <link rel="icon" href="logo.jpg" type="image/jpg">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        .share-card {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            color: white;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .share-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .share-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+        .logo {
+            width: 50px;
+            height: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white text-center py-4 flex justify-center items-center">
+        <img src="logo.jpg" alt="Logo" class="logo">
+        <h1 class="text-2xl font-bold">Berbagi</h1>
+    </header>
+
+    <nav class="bg-gray-800 text-white py-2">
+        <ul class="flex justify-center space-x-4">
+            <li><a href="dashboard.html" class="text-white hover:text-blue-400">Home</a></li>
+            <li><a href="services.html" class="text-white hover:text-blue-400">Layanan</a></li>
+            <li><a href="contact.html" class="text-white hover:text-blue-400">Kontak</a></li>
+            <li><a href="transactions.html" class="text-white hover:text-blue-400">Transaksi</a></li>
+            <li><a href="qris.html" class="text-white hover:text-blue-400">QRIS</a></li>
+            <li><a href="notifications.html" class="text-white hover:text-blue-400">Notifikasi</a></li>
+            <li><a href="profil.html" class="text-white hover:text-blue-400">Akun Saya</a></li>
+            <li><a href="index.html" class="text-white hover:text-blue-400">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="container mt-5 p-5 bg-white rounded-lg shadow text-center">
+        <h2 class="text-2xl font-bold text-gray-800">Berbagi Saldo dengan Mudah</h2>
+        <p class="text-gray-600 mt-2">Kirim saldo ke teman dan keluarga hanya dengan beberapa klik.</p>
+
+        <div class="mt-5">
+            <div class="share-card mx-auto w-64 py-5">
+                <i class="fas fa-share-alt share-icon"></i>
+                <p class="text-lg font-bold">Masukkan Detail Penerima</p>
+                <form id="shareForm" class="mt-4">
+                    <input type="number" id="phoneNumber" class="form-control mb-3" placeholder="Nomor Penerima" required>
+                    <input type="number" id="amount" class="form-control mb-3" placeholder="Jumlah Saldo" required>
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-800">Kirim</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="shareResult" class="mt-4 text-lg font-bold text-gray-700 hidden">
+            <p>Memproses transaksi...</p>
+        </div>
+
+        <div id="historyContainer" class="mt-6">
+            <h3 class="text-xl font-bold text-gray-800">Riwayat Transaksi</h3>
+            <ul id="historyList" class="list-group mt-3"></ul>
+            <button class="btn btn-danger mt-3" onclick="clearHistory()">Hapus Riwayat</button>
+        </div>        
+    </section>
+
+    <footer class="text-center bg-gray-900 text-white py-4 mt-5">
+        <p>&copy; This application was created by Athalla Rakha Syafa'at.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadHistory(); // Load history saat halaman dimuat
+        });
+    
+        document.getElementById("shareForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Mencegah form melakukan reload halaman
+    
+            let phoneNumber = document.getElementById("phoneNumber").value;
+            let amount = document.getElementById("amount").value;
+    
+            if (phoneNumber && amount) {
+                let transaction = {
+                    phone: phoneNumber,
+                    amount: amount,
+                    date: new Date().toLocaleString()
+                };
+    
+                let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+                transactions.push(transaction);
+                localStorage.setItem("transactions", JSON.stringify(transactions));
+    
+                document.getElementById("phoneNumber").value = "";
+                document.getElementById("amount").value = "";
+    
+                loadHistory(); // Perbarui tampilan riwayat transaksi
+            }
+        });
+    
+        function loadHistory() {
+            let historyList = document.getElementById("historyList");
+            historyList.innerHTML = ""; // Kosongkan daftar sebelum ditampilkan kembali
+    
+            let transactions = JSON.parse(localStorage.getItem("transactions")) || [];
+    
+            transactions.forEach((transaction, index) => {
+                let listItem = document.createElement("li");
+                listItem.className = "list-group-item";
+                listItem.innerHTML = `<strong>${transaction.phone}</strong> menerima Rp${transaction.amount} <br> <small>${transaction.date}</small>`;
+                historyList.appendChild(listItem);
+            });
+        }
+    
+        function clearHistory() {
+            localStorage.removeItem("transactions");
+            loadHistory(); // Perbarui tampilan
+        }
+    </script>    
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

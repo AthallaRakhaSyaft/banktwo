@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRIS</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- QR Code Generator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        .qris-box {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .qris-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        #qrcode {
+            margin: auto;
+        }
+        .logo {
+            height: 50px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white text-center py-4 flex justify-center items-center">
+        <img src="logo.jpg" alt="Logo" class="logo">
+        <h1 class="text-2xl font-bold">QRIS</h1>
+    </header>
+
+    <nav class="bg-gray-800 text-white py-2">
+        <ul class="flex justify-center space-x-4">
+            <li><a href="dashboard.html" class="text-white hover:text-blue-400">Home</a></li>
+            <li><a href="services.html" class="text-white hover:text-blue-400">Layanan</a></li>
+            <li><a href="contact.html" class="text-white hover:text-blue-400">Kontak</a></li>
+            <li><a href="transactions.html" class="text-white hover:text-blue-400">Transaksi</a></li>
+            <li><a href="qris.html" class="text-white hover:text-blue-400">QRIS</a></li>
+            <li><a href="notifications.html" class="text-white hover:text-blue-400">Notifikasi</a></li>
+            <li><a href="profil.html" class="text-white hover:text-blue-400">Akun Saya</a></li>
+            <li><a href="index.html" class="text-white hover:text-blue-400">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="container mt-5 p-5 bg-white rounded-lg shadow text-center">
+        <h2 class="text-2xl font-bold text-gray-800">Bayar dengan QRIS</h2>
+        <p class="text-gray-600 mt-2">Pindai kode QR di bawah untuk melakukan pembayaran.</p>
+
+        <div class="d-flex flex-column align-items-center text-center mt-4">
+            <div id="qrcode" class="mb-3"></div>
+            <button class="btn btn-primary" onclick="generateQR()">
+                <i class="fas fa-redo"></i> Generate QRIS Baru
+            </button>
+        </div>        
+    </section>
+
+    <footer class="text-center bg-gray-900 text-white py-4 mt-5">
+        <p>&copy; This application was created by Athalla Rakha Syafa'at.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function generateQR() {
+            document.getElementById("qrcode").innerHTML = "";
+            let qrisData = "https://bankdigital.com/qris?trx=" + Math.random().toString(36).substr(2, 9);
+            new QRCode(document.getElementById("qrcode"), {
+                text: qrisData,
+                width: 200,
+                height: 200
+            });
+        }
+
+        // Generate QR awal saat halaman dimuat
+        generateQR();
+    </script>
+</body>
+</html>

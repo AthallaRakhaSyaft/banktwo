@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpg" href="logo.jpg">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .profile-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .profile-icon {
+            font-size: 80px;
+            color: #2563eb;
+        }
+        .logo {
+            height: 50px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white text-center py-4 flex justify-center items-center">
+        <img src="logo.jpg" alt="Logo" class="logo">
+        <h1 class="text-2xl font-bold">Info</h1>
+    </header>
+
+    <nav class="bg-gray-800 text-white py-2">
+        <ul class="flex justify-center space-x-4">
+            <li><a href="dashboard.html" class="text-white hover:text-blue-400">Home</a></li>
+            <li><a href="services.html" class="text-white hover:text-blue-400">Layanan</a></li>
+            <li><a href="contact.html" class="text-white hover:text-blue-400">Kontak</a></li>
+            <li><a href="transactions.html" class="text-white hover:text-blue-400">Transaksi</a></li>
+            <li><a href="qris.html" class="text-white hover:text-blue-400">QRIS</a></li>
+            <li><a href="notifications.html" class="text-white hover:text-blue-400">Notifikasi</a></li>
+            <li><a href="profil.html" class="text-white hover:text-blue-400">Akun Saya</a></li>
+            <li><a href="index.html" class="text-white hover:text-blue-400">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section class="container mt-5 p-5 bg-white rounded-lg shadow text-center info-card">
+        <i class="fas fa-info-circle info-icon"></i>
+        <h2 class="text-2xl font-bold text-gray-800 mt-2">Tentang Bank Digital</h2>
+        <p class="text-gray-600 mt-2">
+            Bank Digital adalah layanan perbankan modern yang memudahkan Anda melakukan transaksi kapan saja dan di mana saja.
+            Dengan fitur keamanan tinggi dan kemudahan akses, kami berkomitmen untuk memberikan pengalaman perbankan terbaik.
+        </p>
+    </section>
+
+    <section class="container mt-5 p-5 bg-white rounded-lg shadow">
+        <h2 class="text-xl font-bold text-center text-gray-800">Keunggulan Kami</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center mt-5">
+            <div class="info-card">
+                <i class="fas fa-shield-alt text-blue-500 text-4xl"></i>
+                <h3 class="text-lg font-bold mt-2">Keamanan Terjamin</h3>
+                <p class="text-gray-600 mt-1">Proteksi data dan transaksi dengan teknologi enkripsi terbaru.</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-mobile-alt text-blue-500 text-4xl"></i>
+                <h3 class="text-lg font-bold mt-2">Akses Mudah</h3>
+                <p class="text-gray-600 mt-1">Transaksi kapan saja dan di mana saja langsung dari ponsel Anda.</p>
+            </div>
+            <div class="info-card">
+                <i class="fas fa-user-friends text-blue-500 text-4xl"></i>
+                <h3 class="text-lg font-bold mt-2">Layanan 24/7</h3>
+                <p class="text-gray-600 mt-1">Tim support kami siap membantu Anda setiap saat.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center bg-gray-900 text-white py-4 mt-5">
+        <p>&copy; This application was created by Athalla Rakha Syafa'at.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

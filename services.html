@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        .logo {
+            height: 50px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white text-center py-4 flex justify-center items-center">
+        <img src="logo.jpg" alt="Logo" class="logo">
+        <h1 class="text-2xl font-bold">Layanan</h1>
+    </header>
+    
+    <nav class="bg-gray-800 text-white py-2">
+        <ul class="flex justify-center space-x-4">
+            <li><a href="dashboard.html" class="text-white hover:text-blue-400">Home</a></li>
+            <li><a href="services.html" class="text-white hover:text-blue-400">Layanan</a></li>
+            <li><a href="contact.html" class="text-white hover:text-blue-400">Kontak</a></li>
+            <li><a href="transactions.html" class="text-white hover:text-blue-400">Transaksi</a></li>
+            <li><a href="qris.html" class="text-white hover:text-blue-400">QRIS</a></li>
+            <li><a href="notifications.html" class="text-white hover:text-blue-400">Notifikasi</a></li>
+            <li><a href="profil.html" class="text-white hover:text-blue-400">Akun Saya</a></li>
+            <li><a href="index.html" class="text-white hover:text-blue-400">Logout</a></li>
+        </ul>
+    </nav>
+    
+    <section class="container mx-auto my-10 p-6 bg-white shadow-lg rounded-lg text-center">
+        <h2 class="text-3xl font-semibold mb-4">Layanan Kami</h2>
+        <p class="text-gray-700">Nikmati berbagai layanan perbankan digital yang aman dan nyaman.</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            <div class="p-4 border rounded-lg shadow-md">
+                <i class="fas fa-exchange-alt text-4xl text-blue-500"></i>
+                <h3 class="text-xl font-semibold mt-2">Transfer Dana</h3>
+                <p class="text-gray-600">Kirim uang ke mana saja dengan cepat dan aman.</p>
+            </div>
+            <div class="p-4 border rounded-lg shadow-md">
+                <i class="fas fa-file-invoice-dollar text-4xl text-green-500"></i>
+                <h3 class="text-xl font-semibold mt-2">Pembayaran Tagihan</h3>
+                <p class="text-gray-600">Bayar tagihan listrik, air, dan lainnya dengan mudah.</p>
+            </div>
+            <div class="p-4 border rounded-lg shadow-md">
+                <i class="fas fa-chart-line text-4xl text-red-500"></i>
+                <h3 class="text-xl font-semibold mt-2">Investasi Online</h3>
+                <p class="text-gray-600">Kelola investasi Anda dengan aman dan transparan.</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="text-center bg-gray-900 text-white py-4 mt-5">
+        <p>&copy; This application was created by Athalla Rakha Syafa'at.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

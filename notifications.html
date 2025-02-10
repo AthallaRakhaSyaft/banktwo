@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifikasi</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        .notif-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .notif-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        .notif-icon {
+            font-size: 24px;
+            margin-right: 10px;
+            color: #2563eb;
+        }
+        .logo {
+            width: 50px;
+            height: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white text-center py-4">
+        <div class="flex justify-center items-center">
+            <img src="logo.jpg" alt="Logo" class="logo mr-2">
+            <h1 class="text-2xl font-bold">Notifikasi</h1>
+        </div>
+        <nav>
+            <ul class="flex justify-center space-x-4 mt-2">
+                <li><a href="dashboard.html" class="text-white hover:text-blue-400">Home</a></li>
+                <li><a href="services.html" class="text-white hover:text-blue-400">Layanan</a></li>
+                <li><a href="contact.html" class="text-white hover:text-blue-400">Kontak</a></li>
+                <li><a href="transactions.html" class="text-white hover:text-blue-400">Transaksi</a></li>
+                <li><a href="qris.html" class="text-white hover:text-blue-400">QRIS</a></li>
+                <li><a href="notifications.html" class="text-white hover:text-blue-400">Notifikasi</a></li>
+                <li><a href="profil.html" class="text-white hover:text-blue-400">Akun Saya</a></li>
+                <li><a href="index.html" class="text-white hover:text-blue-400">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="container mt-5 p-5 bg-white rounded-lg shadow">
+        <h2 class="text-2xl font-bold text-gray-800 text-center">Pemberitahuan Terbaru</h2>
+        <p class="text-gray-600 text-center mt-2">Cek aktivitas terbaru akun Anda.</p>
+
+        <div id="notif-container" class="mt-4 space-y-4">
+            <div class="notif-card flex items-center">
+                <i class="fas fa-exchange-alt notif-icon"></i>
+                <p>Transaksi sebesar <b>Rp500.000</b> berhasil!</p>
+            </div>
+            <div class="notif-card flex items-center">
+                <i class="fas fa-tag notif-icon"></i>
+                <p>Promo spesial! Cashback 10% untuk transaksi QRIS.</p>
+            </div>
+            <div class="notif-card flex items-center">
+                <i class="fas fa-shield-alt notif-icon"></i>
+                <p>Keamanan: Login baru terdeteksi dari perangkat lain.</p>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button class="btn btn-danger" onclick="clearNotifications()">
+                <i class="fas fa-trash"></i> Hapus Semua
+            </button>
+        </div>
+    </section>
+
+    <footer class="text-center bg-gray-900 text-white py-4 mt-5">
+        <p>&copy; This application was created by Athalla Rakha Syafa'at.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Fungsi untuk memuat notifikasi dari localStorage
+        function loadNotifications() {
+            const container = document.getElementById("notif-container");
+            const notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+    
+            if (notifications.length === 0) {
+                container.innerHTML = "<p class='text-center text-gray-500'>Tidak ada notifikasi baru.</p>";
+            } else {
+                container.innerHTML = notifications.map(notif => `
+                    <div class="notif-card flex items-center">
+                        <i class="${notif.icon} notif-icon"></i>
+                        <p>${notif.message}</p>
+                    </div>
+                `).join("");
+            }
+        }
+    
+        // Fungsi untuk menghapus semua notifikasi secara permanen
+        function clearNotifications() {
+            if (confirm("Apakah Anda yakin ingin menghapus semua notifikasi secara permanen?")) {
+                localStorage.setItem("notifications", JSON.stringify([])); // Kosongkan data di localStorage
+                document.getElementById("notif-container").innerHTML = "<p class='text-center text-gray-500'>Tidak ada notifikasi baru.</p>";
+            }
+        }
+    
+        // Simpan notifikasi saat halaman pertama kali dimuat (hanya jika localStorage kosong)
+        document.addEventListener("DOMContentLoaded", function () {
+            if (!localStorage.getItem("notifications")) {
+                const initialNotifications = [
+                    { icon: "fas fa-exchange-alt", message: "Transaksi sebesar <b>Rp500.000</b> berhasil!" },
+                    { icon: "fas fa-tag", message: "Promo spesial! Cashback 10% untuk transaksi QRIS." },
+                    { icon: "fas fa-shield-alt", message: "Keamanan: Login baru terdeteksi dari perangkat lain." }
+                ];
+                localStorage.setItem("notifications", JSON.stringify(initialNotifications));
+            }
+            loadNotifications(); // Muat notifikasi dari localStorage
+        });
+    </script>    
+</body>
+</html>

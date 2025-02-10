@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="logo.jpg">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        .keyboard-key {
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .keyboard-key:hover {
+            background: #1e40af;
+            transform: scale(1.1);
+        }
+
+        .keyboard-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            justify-content: center;
+            max-width: 250px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-gray-800 text-white text-center py-4">
+        <img src="logo.jpg" alt="Logo" class="mx-auto mb-2" width="50">
+        <h1 class="text-2xl font-bold">Keyboard</h1>
+        <nav>
+            <ul class="flex justify-center space-x-4 mt-2">
+                <li><a href="dashboard.html" class="text-white hover:text-blue-400">Home</a></li>
+                <li><a href="services.html" class="text-white hover:text-blue-400">Layanan</a></li>
+                <li><a href="contact.html" class="text-white hover:text-blue-400">Kontak</a></li>
+                <li><a href="transactions.html" class="text-white hover:text-blue-400">Transaksi</a></li>
+                <li><a href="qris.html" class="text-white hover:text-blue-400">QRIS</a></li>
+                <li><a href="notifications.html" class="text-white hover:text-blue-400">Notifikasi</a></li>
+                <li><a href="profil.html" class="text-white hover:text-blue-400">Akun Saya</a></li>
+                <li><a href="index.html" class="text-white hover:text-blue-400">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="container mt-5 p-5 bg-white rounded-lg shadow text-center">
+        <h2 class="text-2xl font-bold text-gray-800">Masukkan Nominal atau PIN</h2>
+        <p class="text-gray-600 mt-2">Gunakan keyboard digital untuk keamanan lebih tinggi.</p>
+
+        <div class="mt-4">
+            <input type="text" id="inputField" class="w-full text-center text-2xl font-bold border border-gray-300 rounded-lg p-3" readonly placeholder="0">
+        </div>
+
+        <div class="keyboard-container mt-4">
+            <div class="keyboard-key" onclick="addNumber('1')">1</div>
+            <div class="keyboard-key" onclick="addNumber('2')">2</div>
+            <div class="keyboard-key" onclick="addNumber('3')">3</div>
+            <div class="keyboard-key" onclick="addNumber('4')">4</div>
+            <div class="keyboard-key" onclick="addNumber('5')">5</div>
+            <div class="keyboard-key" onclick="addNumber('6')">6</div>
+            <div class="keyboard-key" onclick="addNumber('7')">7</div>
+            <div class="keyboard-key" onclick="addNumber('8')">8</div>
+            <div class="keyboard-key" onclick="addNumber('9')">9</div>
+            <div class="keyboard-key" onclick="clearInput()">⌫</div>
+            <div class="keyboard-key" onclick="addNumber('0')">0</div>
+            <div class="keyboard-key" onclick="submitInput()">✔</div>
+        </div>
+
+        <div class="mt-6">
+            <h3 class="text-xl font-bold text-gray-800">Riwayat Input</h3>
+            <ul id="historyList" class="list-group mt-3"></ul>
+            <button class="btn btn-danger mt-3" onclick="clearHistory()">Hapus Riwayat</button>
+        </div>
+    </section>
+
+    <footer class="text-center bg-gray-900 text-white py-4 mt-5">
+        <p>&copy; This application was created by Athalla Rakha Syafa'at.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function addNumber(num) {
+            let inputField = document.getElementById("inputField");
+            if (inputField.value === "0") {
+                inputField.value = num;
+            } else {
+                inputField.value += num;
+            }
+        }
+
+        function clearInput() {
+            document.getElementById("inputField").value = "0";
+        }
+
+        function submitInput() {
+            let value = document.getElementById("inputField").value;
+            if (value === "0" || value === "") {
+                alert("Masukkan angka terlebih dahulu!");
+                return;
+            }
+
+            let history = JSON.parse(localStorage.getItem("history")) || [];
+            history.push(value);
+            localStorage.setItem("history", JSON.stringify(history));
+
+            displayHistory();
+            clearInput();
+        }
+
+        function displayHistory() {
+            let historyList = document.getElementById("historyList");
+            historyList.innerHTML = "";
+
+            let history = JSON.parse(localStorage.getItem("history")) || [];
+            history.forEach((item, index) => {
+                let listItem = document.createElement("li");
+                listItem.className = "list-group-item text-lg text-gray-800";
+                listItem.textContent = `${index + 1}. ${item}`;
+                historyList.appendChild(listItem);
+            });
+        }
+
+        function clearHistory() {
+            localStorage.removeItem("history");
+            displayHistory();
+        }
+
+        document.addEventListener("DOMContentLoaded", displayHistory);
+    </script>
+</body>
+</html>
